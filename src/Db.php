@@ -25,6 +25,20 @@ class Db
         }
     }
 
+    public function createUser($email, $username, $password)
+    {
+        $sql = $this->connection->prepare('
+        INSERT INTO user(email, username, password)
+        VALUES (:email, :username, :password)
+        ');
+
+        $sql->bindParam(':email', $email, PDO::PARAM_STR);
+        $sql->bindParam(':username', $username, PDO::PARAM_STR);
+        $sql->bindParam(':password', $password, PDO::PARAM_STR);
+
+        $sql->execute();
+    }
+
     public function getConnection()
     {
         return $this->connection;
