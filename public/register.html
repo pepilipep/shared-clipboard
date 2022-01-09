@@ -3,9 +3,10 @@
     <title>Register now!</title>
     <link rel="stylesheet" href="css/register.css" />
   </head>
+  <script async src="js/register.js"></script>
   <body>
     <div class="form-wrapper">
-      <form class="form-box" accept-charset="utf-8" method="post" action="/register.php">
+      <form id="register" class="form-box" accept-charset="utf-8">
         <div class="form-inner-wrapper">
           <input
             type="email"
@@ -35,6 +36,8 @@
             placeholder="Confirm Password"
             class="form-element form-input"
           />
+          <span id="form-error" class="error"></span>
+          <span id="form-success" class="success"></span>
           <input
             type="submit"
             class="form-element form-button"

@@ -52,3 +52,11 @@ body {
     background-color: green;
     color: white;
 }
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
