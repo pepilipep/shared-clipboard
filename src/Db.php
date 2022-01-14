@@ -39,6 +39,14 @@ class Db
         $sql->execute();
     }
 
+    public function getUser($email)
+    {
+        $sql = $this->connection->prepare("SELECT * FROM user WHERE email = :email");
+        $sql->bindParam(':email', $email, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function getConnection()
     {
         return $this->connection;
