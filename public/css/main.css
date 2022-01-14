@@ -1,0 +1,69 @@
+body {
+	background-color: #edebd9;
+	padding-left: 5em;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: #3d5361;
+}
+
+h1 {
+	color: #1c1f4c;
+	font-size: 300%;
+	/* padding: 5px; */
+	font-family: zillaslab,palatino,"Palatino Linotype",serif;
+    letter-spacing: .035rem;
+	/* line-height: 1.2; */
+	text-align: left;
+}
+
+
+
+article {
+    padding: 1em;
+    font-size: 1.2em;
+    font-family: 'Frank Ruhl Libre', sans-serif;
+}
+
+h2 {
+	color: #037272;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding: 10px;
+}
+
+.begining-box{
+	border: 1px solid rgb(173, 192, 176);
+	margin: 0px 5px 5px 0px;
+	background-color:  rgb(241, 241, 241);
+}
+
+
+.bordered-box {
+	
+	border: 1px solid rgb(173, 192, 176);
+	margin: 10px 50px 10px 0px;
+	background-color:  rgb(241, 241, 241);
+}
+
+.form-element {
+    margin-bottom: 40px;
+    height: 35px;
+    font-size: 26px;
+    border-style: solid;
+}
+.form-button {
+    background-color:#00848c;
+    color:white;
+    border-color: #037373;
+	border-width: 1px;
+}
+
+.form-button:hover {
+    background-color: green;
+    color: white;
+}
+
+p {
+	padding: 10px 30px;
+	font-size: 130%;
+	line-height: 35px;
+}
