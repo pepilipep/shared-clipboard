@@ -21,3 +21,31 @@ CREATE TABLE IF NOT EXISTS clip(
     valid_to TIMESTAMP(6) GENERATED ALWAYS AS ROW END,
     PERIOD FOR SYSTEM_TIME(valid_from, valid_to)
 ) WITH SYSTEM VERSIONING;
+
+CREATE TABLE IF NOT EXISTS access_event(
+	user_id UUID NOT NULL,
+	clip_id UUID NOT NULL,
+	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (user_id, clip_id)
+);
+
+CREATE TABLE IF NOT EXISTS subscription(
+	user_id UUID NOT NULL,
+	clip_id UUID NOT NULL,
+	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW(),
+	PRIMARY KEY (user_id, clip_id)
+);
+
+CREATE TABLE IF NOT EXISTS notification(
+	for_user UUID NOT NULL,
+	by_user UUID NOT NULL,
+	clip_id UUID NOT NULL,
+	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW(),
+	status ENUM('UNREAD', 'SEEN') NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS permission(
+	user_id UUID NOT NULL,
+	clip_id UUID NOT NULL,
+	user_action ENUM('WRITE', 'READ') NOT NULL
+);
