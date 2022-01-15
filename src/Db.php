@@ -1,4 +1,5 @@
 <?php
+
 class Db
 {
     private $connection;
@@ -50,5 +51,28 @@ class Db
     public function getConnection()
     {
         return $this->connection;
+    }
+
+    public function createClip($url, $content_type, $content, $created_by, $expiry_time)
+    {
+        $sql = $this->connection->prepare("
+        INSERT INTO clip(url, content, content_type, status, access_type, created_by, expiry_time)
+        VALUES (:url, :content, :content_type, 'ACTIVE', 'PUBLIC', :created_by, NULL)
+        ");
+
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->bindParam(':content', $content, PDO::PARAM_STR);
+        $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
+        $sql->bindParam(':created_by', $created_by, PDO::PARAM_STR);
+
+        $sql->execute();
+    }
+
+    public function getClip($url)
+    {
+        $sql = $this->connection->prepare("SELECT * FROM clip WHERE url = :url");
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
     }
 }
