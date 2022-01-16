@@ -8,7 +8,13 @@ $db = new Db;
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 $content = htmlspecialchars($_POST['content']);
 
-$content_type = 'TEXT';
+$content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
+
+if ($content_type == 'FILE') {
+    $target_dir = 'uploads/' . basename($_FILES['content']['name']);
+    move_uploaded_file($_FILES['content']['tmp_name'], $target_dir);
+}
+
 $expiry_time = 'doesntmatter';
 $created_by = NULL;
 

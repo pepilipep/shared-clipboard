@@ -1,4 +1,5 @@
 const form = document.getElementById('clip')
+const typeSelect = document.getElementById('content-type')
 
 window.onload = function (e) {
     const url = window.location.pathname.replace('/clips/', '')
@@ -18,19 +19,40 @@ window.onload = function (e) {
         .catch((e) => console.error('Something went wrong', e))
 }
 
+typeSelect.addEventListener('change', (event) => {
+    const newType = event.target.value
+
+    const content = document.getElementById('content')
+
+    if (newType === 'text') {
+        content.type = 'text'
+    } else {
+        content.type = 'file'
+    }
+})
+
 form.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    console.log('IM HERE')
     const url = window.location.pathname.replace('/clips/', '')
 
-    const data = new FormData(event.target)
-    data.set('url', url)
+    // file
+    const contentType = typeSelect.value
+    const contentElement = document.getElementById('content')
 
-    console.log('WHAT DID I DO')
+    const content =
+        contentType === 'text' ? contentElement.value : contentElement.files[0]
+
+    const data = new FormData()
+    data.set('url', url)
+    data.set('content-type', contentType)
+    data.set('content', content)
+
     fetch('/clip.php', {
         method: 'POST',
         body: data,
     })
         .then((res) => res.json())
         .catch((e) => console.error('Something went wrong:', e))
-
-    event.preventDefault()
 })

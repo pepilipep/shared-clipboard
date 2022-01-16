@@ -12,14 +12,22 @@
         <a href="login.html" class="form-element form-button">Login</a>
       </h1>
     </div>
-    <div class="bordered-box">
+    <div class="bordered-box form-wrapper">
       <form id="clip" class="form-box" accept-charset="utf-8">
         <div class="form-inner-wrapper">
+          <label for="content-type">Choose what you want to paste</label>
+          <select
+            id="content-type"
+            name="content-type"
+            class="form-element form-input"
+          >
+            <option value="text">Text</option>
+            <option value="file">File</option>
+          </select>
           <input
             type="text"
             id="content"
             name="content"
-            placeholder="TEXT"
             class="form-element form-input"
           />
           <input
