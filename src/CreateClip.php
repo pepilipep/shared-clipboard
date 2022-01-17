@@ -11,7 +11,7 @@ $content = htmlspecialchars($_POST['content']);
 $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
 
 if ($content_type == 'FILE') {
-    $target_dir = 'uploads/' . basename($_FILES['content']['name']);
+    $target_dir = '../uploads/' . basename($_FILES['content']['name']);
     move_uploaded_file($_FILES['content']['tmp_name'], $target_dir);
 }
 
