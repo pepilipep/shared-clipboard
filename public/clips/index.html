@@ -8,8 +8,8 @@
     <div class="title-box">
       <h1>
         ––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––
-        <a href="register.html" class="form-element form-button">Sign up</a>
-        <a href="login.html" class="form-element form-button">Login</a>
+        <a href="/register.html" class="form-element form-button">Sign up</a>
+        <a href="/login.html" class="form-element form-button">Login</a>
       </h1>
     </div>
     <div class="bordered-box form-wrapper">
@@ -30,6 +30,19 @@
             name="content"
             class="form-element form-input"
           />
+          <select
+            id="expiry-time"
+            name="expiry-time"
+            class="form-element form-input"
+          >
+            <option value="0">Destroy clip when viewed</option>
+            <option value="1">Destroy clip in 1 min</option>
+            <option value="10">Destroy clip in 10 min</option>
+            <option value="60">Destroy clip in 1 hour</option>
+            <option value="1550">Destroy clip in 1 day</option>
+            <option value="10080">Destroy clip in 1 week</option>
+          </select>
+
           <input
             type="submit"
             class="form-element form-button"

@@ -57,13 +57,14 @@ class Db
     {
         $sql = $this->connection->prepare("
         INSERT INTO clip(url, content, content_type, status, access_type, created_by, expiry_time)
-        VALUES (:url, :content, :content_type, 'ACTIVE', 'PUBLIC', :created_by, NULL)
+        VALUES (:url, :content, :content_type, 'ACTIVE', 'PUBLIC', :created_by, :expiry_time)
         ");
 
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
         $sql->bindParam(':content', $content, PDO::PARAM_STR);
         $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
         $sql->bindParam(':created_by', $created_by, PDO::PARAM_STR);
+        $sql->bindParam(':expiry_time', $expiry_time, PDO::PARAM_STR);
 
         $sql->execute();
     }
@@ -74,5 +75,20 @@ class Db
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
         $sql->execute();
         return $sql->fetchAll();
+    }
+
+    public function getExpiryTime($url)
+    {
+        $sql = $this->connection->prepare("SELECT expiry_time FROM clip WHERE url = :url");
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+        return new Datetime($sql->fetchAll()[0]["expiry_time"]);
+    }
+
+    public function deleteClip($url)
+    {
+        $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
     }
 }

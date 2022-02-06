@@ -12,6 +12,16 @@ try {
         echo json_encode([]);
         return;
     }
+
+    $now = new DateTime('now');
+    $expiry_time = $db->getExpiryTime($url);
+
+    if ($now > $expiry_time) {
+        $db->deleteClip($url);
+        echo json_encode([]);
+        return;
+    }
+
     $clip = $clips[0];
 
     echo json_encode([

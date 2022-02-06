@@ -7,6 +7,8 @@ $db = new Db;
 
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 $content = htmlspecialchars($_POST['content']);
+$expiry_time = filter_input(INPUT_POST, 'expiry-time', FILTER_SANITIZE_NUMBER_INT);
+
 
 $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
 
@@ -15,7 +17,12 @@ if ($content_type == 'FILE') {
     move_uploaded_file($_FILES['content']['tmp_name'], $target_dir);
 }
 
-$expiry_time = 'doesntmatter';
+error_log($expiry_time);
+
+$future = new DateTime('now');
+$future->modify("+{$expiry_time} minutes");
+$expiry_time = $future->format('Y-m-d H:i:s');
+
 $created_by = NULL;
 
 try {

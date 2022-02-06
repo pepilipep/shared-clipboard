@@ -5,22 +5,48 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css"
     />
-    <script src="main.js" defer></script>
+    <script src="js/buttons.js" defer></script>
   </head>
 
+  <div class="title-box">
+    <div class="container">
+      <img
+        src="background3.jpg"
+        alt="Snow"
+        style="width: 100%; height: 100px"
+      />
+      <div class="bottom-left">
+        <h1>
+          ––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––
+
+          <a href="register.html" class="form-element form-button">Sign up</a>
+          <a href="login.html" class="form-element form-button">Login</a>
+        </h1>
+      </div>
+    </div>
+  </div>
+
   <body>
-    <div class="title-box">
+    <!-- <div class="title-box">
       <h1>
         ––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––
         <a href="register.html" class="form-element form-button">Sign up</a>
         <a href="login.html" class="form-element form-button">Login</a>
       </h1>
-    </div>
+    </div> -->
     <section id="intro">
       <div class="bordered-box">
         <h2>Detailed instructions:</h2>
         <p>Enter in a URL that starts with /</p>
         <p>Example /uqzjyewazjlyo</p>
+
+        <div class="form-inner-wrapper">
+          <label for="clip-url">Choose URL</label>
+          <input type="text" id="clip-url" name="clip-url" />
+          <button onclick="goToClip()" class="form-element form-button">
+            GO!
+          </button>
+        </div>
       </div>
     </section>
   </body>

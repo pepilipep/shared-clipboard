@@ -40,6 +40,7 @@ form.addEventListener('submit', (event) => {
     // file
     const contentType = typeSelect.value
     const contentElement = document.getElementById('content')
+    const expiryTime = document.getElementById('expiry-time').value
 
     const content =
         contentType === 'text' ? contentElement.value : contentElement.files[0]
@@ -48,6 +49,7 @@ form.addEventListener('submit', (event) => {
     data.set('url', url)
     data.set('content-type', contentType)
     data.set('content', content)
+    data.set('expiry-time', expiryTime)
 
     fetch('/clip.php', {
         method: 'POST',
