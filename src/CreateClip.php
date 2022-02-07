@@ -4,6 +4,7 @@ include 'Db.php';
 
 $db = new Db;
 
+session_start();
 
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 $content = htmlspecialchars($_POST['content']);
@@ -24,6 +25,9 @@ $future->modify("+{$expiry_time} minutes");
 $expiry_time = $future->format('Y-m-d H:i:s');
 
 $created_by = NULL;
+if ($_SESSION['user_id']) {
+    $created_by = $_SESSION['user_id'];
+}
 
 try {
     $db->createClip($url, $content_type, $content, $created_by, $expiry_time);
