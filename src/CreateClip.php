@@ -18,8 +18,6 @@ if ($content_type == 'FILE') {
     move_uploaded_file($_FILES['content']['tmp_name'], $target_dir);
 }
 
-error_log($expiry_time);
-
 $future = new DateTime('now');
 $future->modify("+{$expiry_time} minutes");
 $expiry_time = $future->format('Y-m-d H:i:s');
