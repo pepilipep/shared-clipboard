@@ -1,7 +1,7 @@
 const form = document.getElementById('clip')
 const typeSelect = document.getElementById('content-type')
 
-window.onload = function (e) {
+window.addEventListener('load', (e) => {
     const url = window.location.pathname.replace('/clips/', '')
     const content = document.getElementById('content')
 
@@ -17,7 +17,7 @@ window.onload = function (e) {
             if (res && res.content) content.value = res.content
         })
         .catch((e) => console.error('Something went wrong', e))
-}
+})
 
 typeSelect.addEventListener('change', (event) => {
     const newType = event.target.value

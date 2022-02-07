@@ -77,18 +77,18 @@ class Db
         return $sql->fetchAll();
     }
 
-    public function getExpiryTime($url)
-    {
-        $sql = $this->connection->prepare("SELECT expiry_time FROM clip WHERE url = :url");
-        $sql->bindParam(':url', $url, PDO::PARAM_STR);
-        $sql->execute();
-        return new Datetime($sql->fetchAll()[0]["expiry_time"]);
-    }
-
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
+    public function recordAccessEvent($user_id, $clip_id)
+    {
+        $sql = $this->connection->prepare("INSERT INTO access_event(user_id, clip_id) VALUES (:user_id, :clip_id)");
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':clip_id', $clip_id, PDO::PARAM_STR);
         $sql->execute();
     }
 }
