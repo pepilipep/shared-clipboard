@@ -85,6 +85,20 @@ class Db
         return $sql->fetchAll();
     }
 
+    public function getAccessedClips($user_id)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT c.url, c.content_type, max(ae.action_time) as action_time
+            FROM access_event ae
+            JOIN clip c ON ae.clip_id = c.id 
+            WHERE ae.user_id  = :user_id
+            GROUP BY c.url, c.content_type"
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
