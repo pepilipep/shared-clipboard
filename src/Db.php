@@ -92,6 +92,13 @@ class Db
         $sql->execute();
     }
 
+    public function bombClip($url)
+    {
+        $sql = $this->connection->prepare("UPDATE clip SET expiry_time = now() WHERE url = :url");
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
     public function recordAccessEvent($user_id, $clip_id)
     {
         $sql = $this->connection->prepare("INSERT INTO access_event(user_id, clip_id) VALUES (:user_id, :clip_id)");

@@ -7,20 +7,30 @@ $db = new Db;
 session_start();
 
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
-$content = htmlspecialchars($_POST['content']);
 $expiry_time = filter_input(INPUT_POST, 'expiry-time', FILTER_SANITIZE_NUMBER_INT);
 
 
 $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
 
 if ($content_type == 'FILE') {
-    $target_dir = '../uploads/' . basename($_FILES['content']['name']);
-    move_uploaded_file($_FILES['content']['tmp_name'], $target_dir);
+    $random_id = uniqid();
+    $filename = basename($_FILES['content']['name']);
+    $dir = '../uploads/' . $random_id;
+    mkdir($dir, 0777, true);
+    move_uploaded_file($_FILES['content']['tmp_name'], $dir . '/' . $filename);
+    $content = $random_id . '/' . $filename;
+} else {
+    $content = htmlspecialchars($_POST['content']);
 }
 
 $future = new DateTime('now');
-$future->modify("+{$expiry_time} minutes");
-$expiry_time = $future->format('Y-m-d H:i:s');
+if ($expiry_time == 0) {
+    $expiry_time = null;
+} else {
+    $future->modify("+{$expiry_time} minutes");
+    $expiry_time = $future->format('Y-m-d H:i:s');
+}
+
 
 $created_by = NULL;
 if ($_SESSION['user_id']) {

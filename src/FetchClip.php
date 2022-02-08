@@ -17,22 +17,28 @@ try {
 
     $clip = $clips[0];
 
-    $now = new DateTime('now');
-    $expiry_time = new Datetime($clip["expiry_time"]);
+    $expiry_time = $clip["expiry_time"];
 
     if ($_SESSION['user_id']) {
         $db->recordAccessEvent($_SESSION['user_id'], $clip['id']);
     }
 
-    if ($now > $expiry_time) {
-        $db->deleteClip($url);
-        echo json_encode([]);
-        return;
+    if (is_null($expiry_time)) {
+        $db->bombClip($url);
+    } else {
+        $now = new DateTime('now');
+        $expiry_time = new DateTime($expiry_time);
+        if ($now > $expiry_time) {
+            $db->deleteClip($url);
+            echo json_encode([]);
+            return;
+        }
     }
 
     echo json_encode([
         'content' => $clip['content']
     ]);
 } catch (Exception $e) {
+    error_log($e);
     echo json_encode(['error' => $e]);
 }

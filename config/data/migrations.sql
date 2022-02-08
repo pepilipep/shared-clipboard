@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS clip(
 CREATE TABLE IF NOT EXISTS access_event(
 	user_id UUID NOT NULL,
 	clip_id UUID NOT NULL,
-	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW(),
-	PRIMARY KEY (user_id, clip_id)
+	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS subscription(
