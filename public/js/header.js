@@ -1,24 +1,21 @@
 const header = document.getElementById('header')
 
-function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-    return match ? match[2] : null
-}
-
 window.addEventListener('load', (e) => {
     const session = getCookie('PHPSESSID')
+
+    title = '––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––'
 
     if (session) {
         header.innerHTML = `
         <h1>
-            ––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––
+           ${title}
             <a href="/profile.html">Profile</a>
         </h1>
         `
     } else {
         header.innerHTML = `
         <h1>
-            ––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––
+            ${title}
             <a href="/register.html" class="form-element form-button">
                 Sign up
             </a>

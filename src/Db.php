@@ -77,6 +77,14 @@ class Db
         return $sql->fetchAll();
     }
 
+    public function getClipsByOwner($user_id)
+    {
+        $sql = $this->connection->prepare("SELECT * FROM clip WHERE created_by = :user_id");
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");

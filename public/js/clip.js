@@ -34,7 +34,6 @@ typeSelect.addEventListener('change', (event) => {
 form.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    console.log('IM HERE')
     const url = window.location.pathname.replace('/clips/', '')
 
     // file
