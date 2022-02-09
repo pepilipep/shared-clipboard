@@ -1,8 +1,8 @@
 <?php
 
-include 'Db.php';
-
 session_start();
+
+include 'Db.php';
 
 $db = new Db;
 
@@ -22,6 +22,15 @@ if ($content_type == 'FILE') {
 }
 
 try {
+
+    // handle notifications
+    $clip = $db->getClip($url)[0];
+    $users = $db->getUsersFollowingClips($clip['id']);
+    foreach ($users as $user) {
+        $db->insertNotification($user['user_id'], $_SESSION['user_id'], $clip['id']);
+    }
+
+    // actual update
     $db->updateClip($url, $content_type, $content);
     echo json_encode([
         'msg' => 'Clip updated successfully!'

@@ -131,6 +131,30 @@ class Db
         return $sql->fetchAll();
     }
 
+    public function getUsersFollowingClips($clip_id)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT s.user_id
+            FROM subscription s 
+            WHERE s.clip_id = :clip_id"
+        );
+        $sql->bindParam(':clip_id', $clip_id, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
+    public function insertNotification($for, $by, $clip_id)
+    {
+        $sql = $this->connection->prepare(
+            "INSERT INTO notification(for_user, by_user, clip_id, status)
+            VALUES (:for, :by, :clip_id, 'UNREAD')"
+        );
+        $sql->bindParam(':for', $for, PDO::PARAM_STR);
+        $sql->bindParam(':by', $by, PDO::PARAM_STR);
+        $sql->bindParam(':clip_id', $clip_id, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
