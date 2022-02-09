@@ -34,6 +34,32 @@ typeSelect.addEventListener('change', (event) => {
     }
 })
 
+function subscribe() {
+    const url = window.location.pathname.replace('/clips/', '')
+    const data = new FormData()
+    data.set('url', url)
+
+    fetch('/subscribe.php', { method: 'POST', body: data })
+        .then((res) => res.json())
+        .catch((e) => console.error('Something went wrong:', e))
+}
+
+function createSubscribeElement() {
+    let button = document.createElement('button')
+    button.onclick = subscribe
+    button.innerText = 'Subscribe!'
+    return button
+}
+
+window.addEventListener('load', (event) => {
+    const logged = isLoggedIn()
+    if (!logged) {
+        return
+    }
+    const formWrapper = document.getElementById('form-wrapper')
+    formWrapper.appendChild(createSubscribeElement())
+})
+
 form.addEventListener('submit', (event) => {
     event.preventDefault()
 

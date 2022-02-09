@@ -56,3 +56,23 @@ function viewedClips() {
         })
         .catch((e) => console.error('Something went wrong:', e))
 }
+
+function followedClips() {
+    let tableContent = `
+    <tr>
+        <th>Clip</th>
+        <th>Content Type</th>
+        <th>Followed on</th>
+    </tr>
+    `
+
+    fetch('/followedClips.php', {
+        method: 'GET',
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            res.forEach((clip) => (tableContent += clipFormat(clip)))
+            clipsTable.innerHTML = tableContent
+        })
+        .catch((e) => console.error('Something went wrong:', e))
+}

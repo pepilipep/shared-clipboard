@@ -107,6 +107,19 @@ class Db
         return $sql->fetchAll();
     }
 
+    public function getFollowedClips($user_id)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT c.url, c.content_type, s.action_time
+            FROM subscription s
+            JOIN clip c ON s.clip_id = c.id 
+            WHERE s.user_id  = :user_id"
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
@@ -126,6 +139,19 @@ class Db
         $sql = $this->connection->prepare("INSERT INTO access_event(user_id, clip_id) VALUES (:user_id, :clip_id)");
         $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $sql->bindParam(':clip_id', $clip_id, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
+    public function subscribe($user_id, $url)
+    {
+        $sql = $this->connection->prepare(
+            "INSERT INTO subscription(user_id, clip_id)
+            SELECT :user_id, c.id
+            FROM clip c
+            WHERE url = :url"
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
         $sql->execute();
     }
 }
