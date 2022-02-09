@@ -1,5 +1,6 @@
 const form = document.getElementById('clip')
 const typeSelect = document.getElementById('content-type')
+const contentWrapper = document.getElementById('content-wrapper')
 
 let exists = false
 
@@ -25,15 +26,77 @@ window.addEventListener('load', (e) => {
         .catch((e) => console.error('Something went wrong', e))
 })
 
+function uploadedFileElement(folder, filename) {
+    const input = document.createElement('div')
+    input.id = 'content'
+
+    const ael = document.createElement('a')
+    ael.href = `/uploads/${folder}/${filename}`
+    ael.innerText = filename
+    ael.download = filename
+    input.appendChild(ael)
+    input.readOnly = true
+    return input
+}
+
+function fileForm() {
+    const form = document.createElement('form')
+
+    const choose = document.createElement('input')
+    choose.id = 'file-choose'
+    choose.type = 'file'
+    form.appendChild(choose)
+
+    const saveButton = document.createElement('input')
+    saveButton.type = 'submit'
+    saveButton.value = 'Save'
+    form.appendChild(saveButton)
+
+    form.onsubmit = (e) => {
+        e.preventDefault()
+        const file = choose.files[0]
+
+        const data = new FormData()
+        data.set('file', file)
+
+        fetch('/upload.php', { method: 'POST', body: data })
+            .then((res) => res.json())
+            .then((res) =>
+                contentWrapper.replaceChildren(
+                    uploadedFileElement(res['folder'], res['filename'])
+                )
+            )
+            .catch((e) => console.error('Something went wrong:', e))
+    }
+
+    return form
+}
+
+function createUploadButton() {
+    const button = document.createElement('button')
+    button.innerText = 'Upload'
+    button.onclick = (e) => {
+        contentWrapper.replaceChildren(fileForm())
+    }
+    return button
+}
+
+function textContentInput() {
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.id = 'content'
+    return input
+}
+
 typeSelect.addEventListener('change', (event) => {
     const newType = event.target.value
 
     const content = document.getElementById('content')
 
     if (newType === 'text') {
-        content.type = 'text'
+        contentWrapper.replaceChildren(textContentInput())
     } else {
-        content.type = 'file'
+        contentWrapper.replaceChildren(createUploadButton())
     }
 })
 
