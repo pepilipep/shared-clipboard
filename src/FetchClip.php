@@ -17,7 +17,7 @@ try {
 
     $clip = $clips[0];
 
-    $expiry_time = $clip["expiry_time"];
+    $expiry_time = $clip['expiry_time'];
 
     if ($_SESSION['user_id']) {
         $db->recordAccessEvent($_SESSION['user_id'], $clip['id']);
@@ -35,8 +35,13 @@ try {
         }
     }
 
+    if ($clip['content_type'] == 'FILE') {
+        $clip['content'] = basename($clip['content']);
+    }
+
     echo json_encode([
-        'content' => $clip['content']
+        'content' => $clip['content'],
+        'content_type' => $clip['content_type']
     ]);
 } catch (Exception $e) {
     error_log($e);

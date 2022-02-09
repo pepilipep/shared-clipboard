@@ -14,7 +14,10 @@ window.addEventListener('load', (e) => {
     })
         .then((res) => res.json())
         .then((res) => {
-            if (res && res.content) content.value = res.content
+            if (res && res.content) {
+                content.value = res.content
+                typeSelect.value = res.content_type.toLowerCase()
+            }
         })
         .catch((e) => console.error('Something went wrong', e))
 })
