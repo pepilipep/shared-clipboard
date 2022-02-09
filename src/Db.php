@@ -77,6 +77,17 @@ class Db
         $sql->execute();
     }
 
+    public function updateClip($url, $content_type, $content)
+    {
+        $sql = $this->connection->prepare("UPDATE clip SET content = :content, content_type = :content_type WHERE url = :url");
+
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->bindParam(':content', $content, PDO::PARAM_STR);
+        $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
+
+        $sql->execute();
+    }
+
     public function getClip($url)
     {
         $sql = $this->connection->prepare("SELECT * FROM clip WHERE url = :url");

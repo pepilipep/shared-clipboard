@@ -1,6 +1,8 @@
 const form = document.getElementById('clip')
 const typeSelect = document.getElementById('content-type')
 
+let exists = false
+
 window.addEventListener('load', (e) => {
     const url = window.location.pathname.replace('/clips/', '')
     const content = document.getElementById('content')
@@ -15,6 +17,7 @@ window.addEventListener('load', (e) => {
         .then((res) => res.json())
         .then((res) => {
             if (res && res.content) {
+                exists = true
                 content.value = res.content
                 typeSelect.value = res.content_type.toLowerCase()
             }
@@ -79,7 +82,7 @@ form.addEventListener('submit', (event) => {
     data.set('content', content)
     data.set('expiry-time', expiryTime)
 
-    fetch('/clip.php', {
+    fetch(exists ? '/updateClip.php' : '/clip.php', {
         method: 'POST',
         body: data,
     })
