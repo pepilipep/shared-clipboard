@@ -2,8 +2,6 @@
 
 include 'Db.php';
 
-session_start();
-
 $db = new Db;
 
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
@@ -19,7 +17,8 @@ try {
 
     $expiry_time = $clip['expiry_time'];
 
-    if ($_SESSION['user_id']) {
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_start();
         $db->recordAccessEvent($_SESSION['user_id'], $clip['id']);
     }
 

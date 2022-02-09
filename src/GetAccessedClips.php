@@ -4,10 +4,8 @@ include 'Db.php';
 
 $db = new Db;
 
-session_start();
-
-
-if (!$_SESSION['user_id']) {
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_start();
     echo json_encode(['error' => 'user not logged in']);
 }
 

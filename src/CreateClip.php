@@ -4,8 +4,6 @@ include 'Db.php';
 
 $db = new Db;
 
-session_start();
-
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 $expiry_time = filter_input(INPUT_POST, 'expiry-time', FILTER_SANITIZE_NUMBER_INT);
 
@@ -33,7 +31,8 @@ if ($expiry_time == 0) {
 
 
 $created_by = NULL;
-if ($_SESSION['user_id']) {
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_start();
     $created_by = $_SESSION['user_id'];
 }
 
