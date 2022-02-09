@@ -9,19 +9,8 @@ $db = new Db;
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 $expiry_time = filter_input(INPUT_POST, 'expiry-time', FILTER_SANITIZE_NUMBER_INT);
 
-
 $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
-
-if ($content_type == 'FILE') {
-    $random_id = uniqid();
-    $filename = basename($_FILES['content']['name']);
-    $dir = '../uploads/' . $random_id;
-    mkdir($dir, 0777, true);
-    move_uploaded_file($_FILES['content']['tmp_name'], $dir . '/' . $filename);
-    $content = $random_id . '/' . $filename;
-} else {
-    $content = htmlspecialchars($_POST['content']);
-}
+$content = htmlspecialchars($_POST['content']);
 
 $future = new DateTime('now');
 if ($expiry_time == 0) {

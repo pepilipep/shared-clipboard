@@ -19,24 +19,29 @@ window.addEventListener('load', (e) => {
         .then((res) => {
             if (res && res.content) {
                 exists = true
-                content.value = res.content
                 typeSelect.value = res.content_type.toLowerCase()
+                if (typeSelect.value === 'text') {
+                    content.value = res.content
+                } else {
+                    const [folder, filename] = res.content.split('/')
+                    console.log(folder, filename)
+                    contentWrapper.replaceChildren(
+                        uploadedFileElement(folder, filename)
+                    )
+                }
             }
         })
         .catch((e) => console.error('Something went wrong', e))
 })
 
 function uploadedFileElement(folder, filename) {
-    const input = document.createElement('div')
-    input.id = 'content'
-
     const ael = document.createElement('a')
-    ael.href = `/uploads/${folder}/${filename}`
+    ael.value = `${folder}/${filename}`
+    ael.id = 'content'
+    ael.href = `/uploads/${ael.value}`
     ael.innerText = filename
     ael.download = filename
-    input.appendChild(ael)
-    input.readOnly = true
-    return input
+    return ael
 }
 
 function fileForm() {
@@ -131,18 +136,14 @@ form.addEventListener('submit', (event) => {
 
     const url = window.location.pathname.replace('/clips/', '')
 
-    // file
     const contentType = typeSelect.value
     const contentElement = document.getElementById('content')
     const expiryTime = document.getElementById('expiry-time').value
 
-    const content =
-        contentType === 'text' ? contentElement.value : contentElement.files[0]
-
     const data = new FormData()
     data.set('url', url)
     data.set('content-type', contentType)
-    data.set('content', content)
+    data.set('content', contentElement.value)
     data.set('expiry-time', expiryTime)
 
     fetch(exists ? '/updateClip.php' : '/clip.php', {

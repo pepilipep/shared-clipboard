@@ -35,10 +35,6 @@ try {
         }
     }
 
-    if ($clip['content_type'] == 'FILE') {
-        $clip['content'] = basename($clip['content']);
-    }
-
     echo json_encode([
         'content' => $clip['content'],
         'content_type' => $clip['content_type']
