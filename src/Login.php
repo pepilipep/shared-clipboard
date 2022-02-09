@@ -4,12 +4,12 @@ include 'Db.php';
 
 $db = new Db;
 
-if (session_status() === PHP_SESSION_ACTIVE) {
+session_start();
+
+if (isset($_SESSION['user_id'])) {
     echo json_encode(['msg' => 'already logged in!']);
     return;
 }
-
-session_start();
 
 function validateInput()
 {

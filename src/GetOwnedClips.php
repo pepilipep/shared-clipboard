@@ -2,11 +2,13 @@
 
 include 'Db.php';
 
+session_start();
+
 $db = new Db;
 
-if (session_status() === PHP_SESSION_ACTIVE) {
-    session_start();
+if (!isset($_SESSION['user_id'])) {
     echo json_encode(['error' => 'user not logged in']);
+    return;
 }
 
 $user_id = $_SESSION['user_id'];
