@@ -48,6 +48,14 @@ class Db
         return $sql->fetchAll();
     }
 
+    public function getUserByID($id)
+    {
+        $sql = $this->connection->prepare("SELECT * FROM user WHERE id = :id");
+        $sql->bindParam(':id', $id, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function getConnection()
     {
         return $this->connection;

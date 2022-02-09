@@ -1,14 +1,13 @@
 const clipsTable = document.getElementById('clips')
 
 window.addEventListener('load', (e) => {
-    const session = getCookie('PHPSESSID')
-    if (!session) {
+    const logged = isLoggedIn()
+    if (!logged) {
         window.location.replace('/login.html')
     }
 })
 
 function clipFormat(clip) {
-    console.log(clip)
     return `
     <tr>
         <td><a href="/clips/${clip.url}">${clip.url}</a></td>

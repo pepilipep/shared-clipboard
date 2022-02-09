@@ -1,11 +1,11 @@
 const header = document.getElementById('header')
 
 window.addEventListener('load', (e) => {
-    const session = getCookie('PHPSESSID')
+    const logged = isLoggedIn()
 
     title = '––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––'
 
-    if (session) {
+    if (logged) {
         header.innerHTML = `
         <h1>
            ${title}

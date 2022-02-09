@@ -16,6 +16,7 @@ form.addEventListener('submit', (event) => {
                 errorHolder.innerText = res.error
             } else {
                 successHolder.innerText = res.msg
+                window.location.replace('/')
             }
         })
         .catch((e) => console.error('Something went wrong:', e))
