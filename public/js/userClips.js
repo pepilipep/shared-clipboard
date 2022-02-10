@@ -1,7 +1,7 @@
 const clipsTable = document.getElementById('clips')
 
-window.addEventListener('load', (e) => {
-    const logged = isLoggedIn()
+window.addEventListener('load', async (e) => {
+    const logged = await isLoggedIn()
     if (!logged) {
         window.location.replace('/login.html')
     }
@@ -61,6 +61,16 @@ function chooseTab(event) {
     headers.appendChild(clipName)
     headers.appendChild(contentType)
     headers.appendChild(time)
+
+    const tabs = document.getElementsByClassName('tabs')[0]
+    for (let i = 0; i < tabs.children.length; i++) {
+        tabs.children[i].className = tabs.children[i].className.replace(
+            ' active',
+            ''
+        )
+    }
+
+    event.target.className += ' active'
 
     fetch(endpoint, {
         method: 'GET',

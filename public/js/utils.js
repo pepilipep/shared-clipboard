@@ -25,6 +25,12 @@ async function getNotifications(countOnly = false) {
         method: 'GET',
     })
         .then((res) => res.json())
+        .then((res) => {
+            if (res && res.error) {
+                window.sessionStorage.clear()
+            }
+            return res
+        })
         .catch((e) => console.error('Something went wrong:', e))
 }
 

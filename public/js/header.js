@@ -22,25 +22,21 @@ window.addEventListener('load', async (e) => {
         headerActionsWrapper.appendChild(profile)
 
         const notEl = document.createElement('a')
-        notEl.className = 'btn'
         notEl.href = '/profile.html'
         notEl.innerText = notificationsCount
         headerActionsWrapper.appendChild(notEl)
 
         const lbut = document.createElement('button')
-        lbut.className = 'btn'
         lbut.onclick = logout
         lbut.innerText = 'Logout'
         headerActionsWrapper.appendChild(lbut)
     } else {
         const signUp = document.createElement('a')
-        signUp.className = 'btn'
         signUp.href = '/register.html'
         signUp.innerText = 'Sign up'
         headerActionsWrapper.appendChild(signUp)
 
         const login = document.createElement('a')
-        login.className = 'btn'
         login.href = '/login.html'
         login.innerText = 'Login'
         headerActionsWrapper.appendChild(login)

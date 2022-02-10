@@ -6,7 +6,7 @@
 } */
 
 body {
-    background-image: url("new.jpg");
+    background-image: url("/img/new.jpg");
     background-repeat: repeat;
     background-attachment: fixed;
     font-family: Arial, Helvetica, sans-serif;
@@ -107,7 +107,7 @@ form {
 }
 
 
-.btn {
+button {
     background-color: #302d2b;
     color: #fff;
     font-size: 1.5rem;
@@ -118,11 +118,11 @@ form {
     margin: 10px 5px;
 }
 
-.btn:focus {
+button:focus {
     outline: 0;
 }
 
-.btn:active {
+button:active {
     transform: scale(0.98);
 }
 

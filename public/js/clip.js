@@ -117,7 +117,6 @@ function subscribe() {
 
 function createSubscribeElement() {
     let button = document.createElement('button')
-    button.className = 'btn'
     button.onclick = subscribe
     button.innerText = 'Subscribe'
     return button
