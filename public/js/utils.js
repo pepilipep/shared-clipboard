@@ -2,6 +2,12 @@ function isLoggedIn() {
     return !!window.sessionStorage.getItem('email')
 }
 
+async function getNotifications() {
+    return fetch('/notifications.php', { method: 'GET' })
+        .then((res) => res.json())
+        .catch((e) => console.error('Something went wrong:', e))
+}
+
 window.addEventListener('load', (event) => {
     const logged = isLoggedIn()
     if (logged) {

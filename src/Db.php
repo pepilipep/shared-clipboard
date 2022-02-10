@@ -155,6 +155,28 @@ class Db
         $sql->execute();
     }
 
+    public function getNotificationsForUser($for)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT * FROM notification
+            WHERE for_user = :for AND status = 'UNREAD'"
+        );
+        $sql->bindParam(':for', $for, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
+    public function seeNotificationsForUser($for)
+    {
+        $sql = $this->connection->prepare(
+            "UPDATE notification
+            SET status = 'UNREAD'
+            WHERE for_user = :for"
+        );
+        $sql->bindParam(':for', $for, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
     public function deleteClip($url)
     {
         $sql = $this->connection->prepare("DELETE FROM clip WHERE url = :url");
