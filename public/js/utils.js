@@ -10,6 +10,14 @@ async function getNotifications(countOnly = false) {
         .catch((e) => console.error('Something went wrong:', e))
 }
 
+function logout() {
+    fetch('/logout.php', { method: 'POST' })
+        .then((res) => res.json())
+        .then((_) => window.sessionStorage.clear())
+        .then((_) => window.location.replace('/'))
+        .catch((e) => console.error('Something went wrong:', e))
+}
+
 window.addEventListener('load', (event) => {
     const logged = isLoggedIn()
     if (logged) {
