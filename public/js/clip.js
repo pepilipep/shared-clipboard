@@ -117,17 +117,18 @@ function subscribe() {
 
 function createSubscribeElement() {
     let button = document.createElement('button')
+    button.className = 'btn'
     button.onclick = subscribe
-    button.innerText = 'Subscribe!'
+    button.innerText = 'Subscribe'
     return button
 }
 
-window.addEventListener('load', (event) => {
-    const logged = isLoggedIn()
+window.addEventListener('load', async (event) => {
+    const logged = await isLoggedIn()
     if (!logged) {
         return
     }
-    const formWrapper = document.getElementById('form-wrapper')
+    const formWrapper = document.getElementsByClassName('panel-container')[0]
     formWrapper.appendChild(createSubscribeElement())
 })
 

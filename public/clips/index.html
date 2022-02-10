@@ -7,46 +7,42 @@
   <script async src="/js/header.js"></script>
   <script async src="/js/clip.js"></script>
   <body>
-    <div class="title-box" id="header"></div>
-    <div id="form-wrapper" class="bordered-box form-wrapper">
-      <form id="clip" class="form-box" accept-charset="utf-8">
-        <div class="form-inner-wrapper">
-          <label for="content-type">Choose what you want to paste</label>
-          <select
-            id="content-type"
-            name="content-type"
-            class="form-element form-input"
-          >
-            <option value="text">Text</option>
-            <option value="file">File</option>
-          </select>
-          <div id="content-wrapper">
-            <input
-              type="text"
-              id="content"
-              name="content"
-              class="form-element form-input"
-            />
-          </div>
-          <select
-            id="expiry-time"
-            name="expiry-time"
-            class="form-element form-input"
-          >
-            <option value="0">Destroy clip when viewed</option>
-            <option value="1">Destroy clip in 1 min</option>
-            <option value="10">Destroy clip in 10 min</option>
-            <option value="60">Destroy clip in 1 hour</option>
-            <option value="1550">Destroy clip in 1 day</option>
-            <option value="10080">Destroy clip in 1 week</option>
-          </select>
-
+    <header id="header"></header>
+    <div class="form-wrapper">
+      <form id="clip" class="panel-container" accept-charset="utf-8">
+        <label for="content-type">
+          <h2>Choose what you want to paste</h2>
+        </label>
+        <select
+          id="content-type"
+          name="content-type"
+          class="form-element form-input"
+        >
+          <option value="text">Text</option>
+          <option value="file">File</option>
+        </select>
+        <div id="content-wrapper">
           <input
-            type="submit"
-            class="form-element form-button"
-            value="Create"
+            type="text"
+            id="content"
+            name="content"
+            class="form-element form-input"
           />
         </div>
+        <select
+          id="expiry-time"
+          name="expiry-time"
+          class="form-element form-input"
+        >
+          <option value="0">Destroy clip when viewed</option>
+          <option value="1">Destroy clip in 1 min</option>
+          <option value="10">Destroy clip in 10 min</option>
+          <option value="60">Destroy clip in 1 hour</option>
+          <option value="1550">Destroy clip in 1 day</option>
+          <option value="10080">Destroy clip in 1 week</option>
+        </select>
+
+        <input type="submit" class="btn" value="Create" />
       </form>
     </div>
   </body>

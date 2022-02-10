@@ -1,39 +1,48 @@
 const header = document.getElementById('header')
 
 window.addEventListener('load', async (e) => {
-    const logged = isLoggedIn()
+    const logged = await isLoggedIn()
 
     const headerText = document.createElement('h1')
-    headerText.innerText =
-        '––––SHARED CLIPBOARD–––––––––––––––––––––––––––––––––––––'
+    headerText.innerText = 'shared clipboard'
     header.replaceChildren(headerText)
+
+    const headerActionsWrapper = document.createElement('div')
+    headerActionsWrapper.className = 'header-actions-wrapper'
+
+    header.appendChild(headerActionsWrapper)
 
     if (logged) {
         const notificationsCount = await getNotifications(true)
 
         const profile = document.createElement('a')
+        profile.className = 'btn'
         profile.href = '/profile.html'
         profile.innerText = 'Profile'
-        header.appendChild(profile)
+        headerActionsWrapper.appendChild(profile)
 
         const notEl = document.createElement('a')
+        notEl.className = 'btn'
         notEl.href = '/profile.html'
         notEl.innerText = notificationsCount
-        header.appendChild(notEl)
+        headerActionsWrapper.appendChild(notEl)
 
-        const logout = document.createElement('button')
-        logout.onclick = logout
-        logout.innerText = 'Logout'
-        header.appendChild(logout)
+        const lbut = document.createElement('button')
+        lbut.className = 'btn'
+        lbut.onclick = logout
+        lbut.innerText = 'Logout'
+        headerActionsWrapper.appendChild(lbut)
     } else {
         const signUp = document.createElement('a')
+        signUp.className = 'btn'
         signUp.href = '/register.html'
         signUp.innerText = 'Sign up'
-        header.appendChild(signUp)
+        headerActionsWrapper.appendChild(signUp)
 
         const login = document.createElement('a')
+        login.className = 'btn'
         login.href = '/login.html'
         login.innerText = 'Login'
-        header.appendChild(login)
+        headerActionsWrapper.appendChild(login)
     }
 })

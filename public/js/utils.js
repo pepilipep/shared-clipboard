@@ -1,5 +1,23 @@
 function isLoggedIn() {
-    return !!window.sessionStorage.getItem('email')
+    const logged = !!window.sessionStorage.getItem('email')
+    if (logged) {
+        return true
+    }
+
+    return fetch('/auth.php', { method: 'GET' })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res && res.logged_in) {
+                window.sessionStorage.setItem('email', res.email)
+                window.sessionStorage.setItem('username', res.username)
+                return true
+            }
+            return false
+        })
+        .catch((e) => {
+            console.error('Something went wrong:', e)
+            return false
+        })
 }
 
 async function getNotifications(countOnly = false) {
@@ -17,20 +35,3 @@ function logout() {
         .then((_) => window.location.replace('/'))
         .catch((e) => console.error('Something went wrong:', e))
 }
-
-window.addEventListener('load', (event) => {
-    const logged = isLoggedIn()
-    if (logged) {
-        return
-    }
-
-    fetch('/auth.php', { method: 'GET' })
-        .then((res) => res.json())
-        .then((res) => {
-            if (res && res.logged_in) {
-                window.sessionStorage.setItem('email', res.email)
-                window.sessionStorage.setItem('username', res.username)
-            }
-        })
-        .catch((e) => console.error('Something went wrong:', e))
-})
