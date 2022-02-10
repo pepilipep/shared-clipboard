@@ -20,6 +20,11 @@ window.addEventListener('load', async (e) => {
         notEl.href = '/profile.html'
         notEl.innerText = notificationsCount
         header.appendChild(notEl)
+
+        const logout = document.createElement('button')
+        logout.onclick = logout
+        logout.innerText = 'Logout'
+        header.appendChild(logout)
     } else {
         const signUp = document.createElement('a')
         signUp.href = '/register.html'
