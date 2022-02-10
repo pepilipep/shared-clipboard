@@ -2,8 +2,10 @@ function isLoggedIn() {
     return !!window.sessionStorage.getItem('email')
 }
 
-async function getNotifications() {
-    return fetch('/notifications.php', { method: 'GET' })
+async function getNotifications(countOnly = false) {
+    return fetch(`/notifications.php?count_only=${countOnly}`, {
+        method: 'GET',
+    })
         .then((res) => res.json())
         .catch((e) => console.error('Something went wrong:', e))
 }

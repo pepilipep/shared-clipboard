@@ -9,15 +9,16 @@ window.addEventListener('load', async (e) => {
     header.replaceChildren(headerText)
 
     if (logged) {
-        const notifications = await getNotifications()
+        const notificationsCount = await getNotifications(true)
 
         const profile = document.createElement('a')
         profile.href = '/profile.html'
         profile.innerText = 'Profile'
         header.appendChild(profile)
 
-        const notEl = document.createElement('h3')
-        notEl.innerText = notifications.length
+        const notEl = document.createElement('a')
+        notEl.href = '/profile.html'
+        notEl.innerText = notificationsCount
         header.appendChild(notEl)
     } else {
         const signUp = document.createElement('a')
