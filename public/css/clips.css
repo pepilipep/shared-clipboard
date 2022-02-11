@@ -4,3 +4,11 @@
     align-items: stretch;
     flex-grow: 10;
 }
+
+#content {
+    width: 100%;
+}
+
+#clip {
+    width: 60%;
+}

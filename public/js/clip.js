@@ -87,16 +87,13 @@ function createUploadButton() {
 }
 
 function textContentInput() {
-    const input = document.createElement('input')
-    input.type = 'text'
+    const input = document.createElement('textarea')
     input.id = 'content'
     return input
 }
 
 typeSelect.addEventListener('change', (event) => {
     const newType = event.target.value
-
-    const content = document.getElementById('content')
 
     if (newType === 'text') {
         contentWrapper.replaceChildren(textContentInput())

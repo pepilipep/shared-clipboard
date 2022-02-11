@@ -1,6 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/forms.css" />
     <link rel="stylesheet" href="/css/main.css" />
     <script async src="/js/utils.js"></script>
     <script src="js/buttons.js" defer></script>
@@ -8,14 +9,13 @@
   </head>
   <body>
     <header id="header"></header>
-    <section id="intro" class="panel-container smaller-container">
-      <h2>Detailed instructions:</h2>
-      <p>Enter in a URL</p>
-      <p>Example uqzjye/wazjlyo</p>
-
-      <label for="clip-url">Choose URL</label>
-      <input type="text" id="clip-url" placeholder="URL" />
-      <button onclick="goToClip()">GO!</button>
-    </section>
+    <div class="form-wrapper">
+      <section id="intro" class="panel-container smaller-container">
+        <h2>Start Clippin:</h2>
+        <label for="clip-url">Choose URL. Example: coolio</label>
+        <input type="text" id="clip-url" placeholder="URL" />
+        <button onclick="goToClip()">GO!</button>
+      </section>
+    </div>
   </body>
 </html>
