@@ -116,6 +116,10 @@ button:focus {
     outline: 0;
 }
 
+button:hover {
+    opacity: 95%;
+}
+
 button:active {
     transform: scale(0.98);
 }

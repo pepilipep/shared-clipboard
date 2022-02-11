@@ -1,3 +1,11 @@
 .tabs button.active {
     background-color: grey;
 }
+
+.tabs-table {
+    background-color: rgb(241, 241, 241);
+}
+
+.tabs-container {
+    display: flex;
+}

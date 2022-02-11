@@ -23,7 +23,7 @@ function clipFormat(clip) {
     td1.appendChild(url)
 
     const td2 = document.createElement('td')
-    td2.innerText = clip.content_type
+    td2.innerText = clip.content_type.toLowerCase()
 
     const td3 = document.createElement('td')
     td3.innerText = new Date(clip.time + 'Z')
