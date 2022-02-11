@@ -12,12 +12,11 @@ $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
 $content = htmlspecialchars($_POST['content']);
 
 try {
-
     // handle notifications
     $clip = $db->getClip($url)[0];
     $users = $db->getUsersFollowingClips($clip['id']);
     foreach ($users as $user) {
-        if ($user['user_id'] !== $_SESSION['user_id']) {
+        if (!isset($_SESSION['user_id']) || $user['user_id'] !== $_SESSION['user_id']) {
             $db->insertNotification($user['user_id'], $_SESSION['user_id'], $clip['id']);
         }
     }

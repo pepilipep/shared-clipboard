@@ -19,7 +19,7 @@ try {
     if ($count_only) {
         echo json_encode(count($notifications));
     } else {
-        // $db->seeNotificationsForUser($user_id);
+        $db->seeNotificationsForUser($user_id);
         echo json_encode($notifications);
     }
 } catch (Exception $e) {

@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS subscription(
 
 CREATE TABLE IF NOT EXISTS notification(
 	for_user UUID NOT NULL,
-	by_user UUID NOT NULL,
+	by_user UUID,
 	clip_id UUID NOT NULL,
 	action_time TIMESTAMP(6) NOT NULL DEFAULT NOW(),
 	status ENUM('UNREAD', 'SEEN') NOT NULL

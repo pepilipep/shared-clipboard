@@ -14,7 +14,7 @@ window.addEventListener('load', async (e) => {
     }
 })
 
-function clipFormat(clip) {
+function clipFormat(clip, isNotification = false) {
     const tr = document.createElement('tr')
     const url = document.createElement('a')
     url.href = `/clips/${clip.url}`
@@ -23,7 +23,9 @@ function clipFormat(clip) {
     td1.appendChild(url)
 
     const td2 = document.createElement('td')
-    td2.innerText = clip.content_type.toLowerCase()
+    td2.innerText = isNotification
+        ? clip.username || 'Anonymous'
+        : clip.content_type.toLowerCase()
 
     const td3 = document.createElement('td')
     td3.innerText = new Date(clip.time + 'Z')
@@ -45,6 +47,8 @@ function chooseTab(event) {
     contentType.innerText = 'Content Type'
     const time = document.createElement('th')
 
+    let isNotification = false
+
     let endpoint
     if (param == 'owned') {
         time.innerText = 'Created on'
@@ -55,6 +59,11 @@ function chooseTab(event) {
     } else if (param == 'followed') {
         time.innerText = 'Followed on'
         endpoint = '/followedClips.php'
+    } else if (param == 'notifications') {
+        time.innerText = 'On'
+        contentType.innerText = 'By user'
+        endpoint = '/notifications.php'
+        isNotification = true
     } else {
         return
     }
@@ -78,7 +87,9 @@ function chooseTab(event) {
         .then((res) => res.json())
         .then((res) => {
             clipsTable.replaceChildren(headers)
-            res.forEach((clip) => clipsTable.appendChild(clipFormat(clip)))
+            res.forEach((clip) =>
+                clipsTable.appendChild(clipFormat(clip, isNotification))
+            )
         })
         .catch((e) => console.error('Something went wrong:', e))
 }

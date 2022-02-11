@@ -158,8 +158,11 @@ class Db
     public function getNotificationsForUser($for)
     {
         $sql = $this->connection->prepare(
-            "SELECT * FROM notification
-            WHERE for_user = :for AND status = 'UNREAD'"
+            "SELECT u.username, c.url, n.action_time as time
+            FROM notification n
+            JOIN clip c ON c.id = n.clip_id
+            LEFT JOIN user u ON u.id = n.by_user
+            WHERE for_user = :for AND n.status = 'UNREAD'"
         );
         $sql->bindParam(':for', $for, PDO::PARAM_STR);
         $sql->execute();
@@ -170,7 +173,7 @@ class Db
     {
         $sql = $this->connection->prepare(
             "UPDATE notification
-            SET status = 'UNREAD'
+            SET status = 'SEEN'
             WHERE for_user = :for"
         );
         $sql->bindParam(':for', $for, PDO::PARAM_STR);
