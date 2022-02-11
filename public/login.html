@@ -9,27 +9,36 @@
   <body>
     <header id="header"></header>
     <div class="form-wrapper">
-      <form id="login" class="panel-container" accept-charset="utf-8">
-        <div class="panel-container">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            class="form-element form-input"
-          />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            class="form-element form-input"
-          />
-          <span id="form-error" class="error"></span>
-          <span id="form-success" class="success"></span>
-          <input type="submit" value="Login" />
-        </div>
-      </form>
+      <div class="container">
+        <form id="login" class="panel-container" accept-charset="utf-8">
+          <h1>log in</h1>
+          <div class="form-control">
+            <input
+              type="email"
+              required
+              id="email"
+              name="email"
+              placeholder="Email"
+              class="form-element form-input"
+            />
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              class="form-element form-input"
+            />
+            <span id="form-error" class="error"></span>
+            <span id="form-success" class="success"></span>
+            <!-- <input type="submit" class="btn" value="Login" /> -->
+            <button type="submit" class="btn">log in</button>
+            <p class="text">
+              Don't have an account? <a href="/register.html">Register</a>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
