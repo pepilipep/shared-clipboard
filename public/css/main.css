@@ -19,16 +19,17 @@ header {
     background-color: #fdfaef;
     height: 100px;
     margin-bottom: 20px;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
 }
 
 .header-actions-wrapper {
     display: flex;
+    align-items: center;
 }
 
 form {
-    box-shadow: 0 4px 10px black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     max-width: 100%;
     width: 400px;
 }
@@ -67,10 +68,22 @@ a {
     color: #362222;
 }
 
+input {
+    outline: 0;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px #B8AB9D solid;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 
 .panel-container {
     background-color: #fdfaef;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     text-align: center;
     height: 90%;

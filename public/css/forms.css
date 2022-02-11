@@ -8,8 +8,6 @@
 
 .form-element {
     flex: 1;
-    cursor: pointer;
-    padding: 5px;
     margin: 10px 0px;
 }
 
@@ -23,15 +21,4 @@
 .form-control {
     margin: 20px 0;
     width: 300px;
-}
-
-.form-control input {
-    outline: 0;
-    background-color: transparent;
-    border: 0;
-    border-bottom: 2px #B8AB9D solid;
-    display: block;
-    width: 100%;
-    padding: 15px 0;
-    font-size: 18px;
 }

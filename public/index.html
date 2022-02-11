@@ -1,6 +1,7 @@
 <html>
   <head>
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/main.css" />
     <script async src="/js/utils.js"></script>
     <script src="js/buttons.js" defer></script>
     <script async src="/js/header.js"></script>
@@ -12,11 +13,9 @@
       <p>Enter in a URL</p>
       <p>Example uqzjye/wazjlyo</p>
 
-      <div class="panel-container smaller-container">
-        <label for="clip-url">Choose URL</label>
-        <input type="text" id="clip-url" name="clip-url" />
-        <button onclick="goToClip()">GO!</button>
-      </div>
+      <label for="clip-url">Choose URL</label>
+      <input type="text" id="clip-url" placeholder="URL" />
+      <button onclick="goToClip()">GO!</button>
     </section>
   </body>
 </html>
