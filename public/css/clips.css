@@ -1,0 +1,6 @@
+
+#content-wrapper {
+    display: flex;
+    align-items: stretch;
+    flex-grow: 10;
+}
