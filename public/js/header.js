@@ -20,7 +20,6 @@ window.addEventListener('load', async (e) => {
         const notificationsCount = await getNotifications(true)
 
         const profile = document.createElement('a')
-        profile.className = 'btn'
         profile.href = '/profile.html'
         profile.innerText = 'Profile'
         headerActionsWrapper.appendChild(profile)
