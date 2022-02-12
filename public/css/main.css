@@ -82,6 +82,14 @@ a {
     font-size: x-large;
 }
 
+th {
+    font-size: x-large;
+}
+
+td {
+    font-size: large;
+}
+
 select {
     border: 1px groove #362222;
     border-radius: 4px;

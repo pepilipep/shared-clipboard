@@ -21,7 +21,9 @@ window.addEventListener('load', async (e) => {
 
         const profile = document.createElement('a')
         profile.href = '/profile.html'
-        profile.innerText = 'Profile'
+        profile.innerText = `Profile [ ${window.sessionStorage.getItem(
+            'username'
+        )} ]`
         headerActionsWrapper.appendChild(profile)
 
         const notEl = document.createElement('a')
