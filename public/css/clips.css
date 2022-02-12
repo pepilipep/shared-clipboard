@@ -1,14 +1,35 @@
-
 #content-wrapper {
     display: flex;
-    align-items: stretch;
     flex-grow: 10;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
-#content {
+.content-textarea {
+    height: 100%;
     width: 100%;
 }
 
 #clip {
     width: 60%;
+}
+
+#upload-button {
+    height: 80%;
+    width: 30%;
+}
+
+#upload-form {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+#subscribe-button {
+    position: absolute;
+    top: 55px;
+    right: 0;
 }

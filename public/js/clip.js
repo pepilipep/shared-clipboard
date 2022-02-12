@@ -5,6 +5,7 @@ const contentWrapper = document.getElementById('content-wrapper')
 let exists = false
 
 window.addEventListener('load', (e) => {
+    const logged = isLoggedIn()
     const url = window.location.pathname.replace('/clips/', '')
     const content = document.getElementById('content')
 
@@ -16,7 +17,7 @@ window.addEventListener('load', (e) => {
         body: data,
     })
         .then((res) => res.json())
-        .then((res) => {
+        .then(async (res) => {
             if (res && res.content) {
                 exists = true
                 typeSelect.value = res.content_type.toLowerCase()
@@ -24,10 +25,15 @@ window.addEventListener('load', (e) => {
                     content.value = res.content
                 } else {
                     const [folder, filename] = res.content.split('/')
-                    console.log(folder, filename)
                     contentWrapper.replaceChildren(
                         uploadedFileElement(folder, filename)
                     )
+                }
+
+                if (await logged) {
+                    document
+                        .getElementsByClassName('panel-container')[0]
+                        .appendChild(createSubscribeElement())
                 }
             }
         })
@@ -36,25 +42,36 @@ window.addEventListener('load', (e) => {
 
 function uploadedFileElement(folder, filename) {
     const ael = document.createElement('a')
+
     ael.value = `${folder}/${filename}`
     ael.id = 'content'
     ael.href = `/uploads/${ael.value}`
-    ael.innerText = filename
     ael.download = filename
+
+    const text = document.createElement('p')
+    text.innerText = filename
+
+    const image = document.createElement('img')
+    image.src = '/img/file.png'
+
+    ael.appendChild(image)
+    ael.appendChild(text)
+
     return ael
 }
 
 function fileForm() {
     const form = document.createElement('form')
+    form.id = 'upload-form'
 
     const choose = document.createElement('input')
     choose.id = 'file-choose'
     choose.type = 'file'
     form.appendChild(choose)
 
-    const saveButton = document.createElement('input')
+    const saveButton = document.createElement('button')
     saveButton.type = 'submit'
-    saveButton.value = 'Save'
+    saveButton.innerText = 'Save'
     form.appendChild(saveButton)
 
     form.onsubmit = (e) => {
@@ -80,6 +97,7 @@ function fileForm() {
 function createUploadButton() {
     const button = document.createElement('button')
     button.innerText = 'Upload'
+    button.id = 'upload-button'
     button.onclick = (e) => {
         contentWrapper.replaceChildren(fileForm())
     }
@@ -89,6 +107,7 @@ function createUploadButton() {
 function textContentInput() {
     const input = document.createElement('textarea')
     input.id = 'content'
+    input.className = 'content-textarea'
     return input
 }
 
@@ -114,19 +133,12 @@ function subscribe() {
 
 function createSubscribeElement() {
     let button = document.createElement('button')
+    button.id = 'subscribe-button'
+    button.type = 'button'
     button.onclick = subscribe
     button.innerText = 'Subscribe'
     return button
 }
-
-window.addEventListener('load', async (event) => {
-    const logged = await isLoggedIn()
-    if (!logged) {
-        return
-    }
-    const formWrapper = document.getElementsByClassName('panel-container')[0]
-    formWrapper.appendChild(createSubscribeElement())
-})
 
 form.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -148,5 +160,6 @@ form.addEventListener('submit', (event) => {
         body: data,
     })
         .then((res) => res.json())
+        .then(() => window.location.replace(`/created.html?url=${url}`))
         .catch((e) => console.error('Something went wrong:', e))
 })

@@ -10,7 +10,7 @@
   <script async src="/js/clip.js"></script>
   <body>
     <header id="header"></header>
-    <div class="form-wrapper">
+    <div class="main-wrapper">
       <form id="clip" class="panel-container" accept-charset="utf-8">
         <label for="content-type">
           <h2>Choose what you want to paste</h2>
@@ -20,7 +20,7 @@
           <option value="file">File</option>
         </select>
         <div id="content-wrapper">
-          <textarea id="content"> </textarea>
+          <textarea id="content" class="content-textarea"></textarea>
         </div>
         <select id="expiry-time" name="expiry-time" class="form-element">
           <option value="0">Destroy clip when viewed</option>

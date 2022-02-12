@@ -20,11 +20,13 @@ header {
     margin-bottom: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
+    padding: 0 20px;
 }
 
 .header-actions-wrapper {
     display: flex;
     align-items: center;
+    padding: 10px;
 }
 
 form {
@@ -61,22 +63,34 @@ h1 {
     letter-spacing: 0.035rem;
 }
 
+h2 {
+    font-size: 3rem;
+    letter-spacing: 0.035rem;
+}
+
+p {
+    font-size: 20px;
+}
+
 a {
     text-decoration: none;
     color: #362222;
+    padding: 0 8px;
+    font-size: x-large;
 }
 
 select {
     border: 1px groove #362222;
     border-radius: 4px;
-    border-style:groove;
+    border-style: groove;
 }
 
 input {
     border: 0;
 }
 
-input, select {
+input,
+select {
     outline: 0;
     background-color: transparent;
     border-bottom: 2px #b8ab9d solid;
@@ -87,10 +101,16 @@ input, select {
     cursor: pointer;
 }
 
-input:hover, select:hover {
+input:hover,
+select:hover {
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-color: #362222;
+}
+
+textarea {
+    outline-color: black;
+    font-size: 18px;
 }
 
 .panel-container {
@@ -103,11 +123,13 @@ input:hover, select:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: stretch;
     padding: 20px;
+    position: relative;
 }
 
 .smaller-container {
-    height: 30%;
+    height: 40%;
     width: 40%;
 }
 
@@ -117,4 +139,11 @@ input:hover, select:hover {
     border-radius: 5px;
     height: 70%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+    height: calc(85%);
+    width: 100%;
 }

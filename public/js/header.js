@@ -3,13 +3,13 @@ const header = document.getElementById('header')
 window.addEventListener('load', async (e) => {
     const logged = await isLoggedIn()
 
-    const headerH1 = document.createElement('h1')
     const headerLink = document.createElement('a')
-    headerLink.innerText = 'shared clipboard'
+    const headerH1 = document.createElement('h1')
+    headerH1.innerText = 'shared clipboard'
     headerLink.href = '/'
-    headerH1.appendChild(headerLink)
+    headerLink.appendChild(headerH1)
 
-    header.replaceChildren(headerH1)
+    header.replaceChildren(headerLink)
 
     const headerActionsWrapper = document.createElement('div')
     headerActionsWrapper.className = 'header-actions-wrapper'
