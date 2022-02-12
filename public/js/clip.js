@@ -5,7 +5,7 @@ const contentWrapper = document.getElementById('content-wrapper')
 let exists = false
 
 window.addEventListener('load', async (e) => {
-    const logged = isLoggedIn()
+    const logged = await isLoggedIn()
     const url = window.location.pathname.replace('/clips/', '')
     const content = document.getElementById('content')
 
@@ -31,11 +31,17 @@ window.addEventListener('load', async (e) => {
                         uploadedFileElement(folder, filename)
                     )
                 }
+
+                if (logged) {
+                    document
+                        .getElementsByClassName('panel-container')[0]
+                        .appendChild(createVisibilityElemenent(res.access_type))
+                }
             }
         })
         .catch((e) => console.error('Something went wrong', e))
 
-    if (await logged) {
+    if (logged) {
         fetch('/isSubscribed.php', {
             method: 'POST',
             body: data,
@@ -46,8 +52,54 @@ window.addEventListener('load', async (e) => {
                     .getElementsByClassName('panel-container')[0]
                     .appendChild(createSubscribeElement(res))
             })
+            .catch((e) => console.error('Something went wrong', e))
     }
 })
+
+function changeVisibility(event) {
+    const url = window.location.pathname.replace('/clips/', '')
+    const data = new FormData()
+    data.set('url', url)
+    data.set('access_type', event.target.value)
+
+    fetch('/changeVisibility.php', {
+        method: 'POST',
+        body: data,
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res && res.rbac) {
+                alert(res.rbac)
+            } else if (res && res.error) {
+                alert(res.error)
+            }
+        })
+        .catch((e) => console.error('Something went wrong', e))
+}
+
+function createVisibilityElemenent(current) {
+    const vis = document.createElement('select')
+    vis.id = 'visibility-select'
+
+    const public = document.createElement('option')
+    public.value = 'PUBLIC'
+    public.innerText = 'Public'
+
+    const protected = document.createElement('option')
+    protected.value = 'PROTECTED'
+    protected.innerText = 'Protected'
+
+    const private = document.createElement('option')
+    private.value = 'PRIVATE'
+    private.innerText = 'Private'
+
+    vis.replaceChildren(public, protected, private)
+
+    vis.value = current
+    vis.onchange = changeVisibility
+
+    return vis
+}
 
 function uploadedFileElement(folder, filename) {
     const ael = document.createElement('a')

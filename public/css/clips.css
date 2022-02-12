@@ -30,6 +30,14 @@
 
 #subscribe-button {
     position: absolute;
-    top: 55px;
+    top: 35px;
     right: 0;
+}
+
+#visibility-select {
+    position: absolute;
+    top: 105px;
+    right: 0;
+    width: 190px;
+    margin: 0 5px;
 }

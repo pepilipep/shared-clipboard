@@ -42,7 +42,8 @@ try {
 
     echo json_encode([
         'content' => $clip['content'],
-        'content_type' => $clip['content_type']
+        'content_type' => $clip['content_type'],
+        'access_type' => $clip['access_type'],
     ]);
 } catch (Exception $e) {
     error_log($e);

@@ -107,6 +107,23 @@ class Db
         return $sql->rowCount();
     }
 
+    public function changeVisibility($url, $access_type, $user_id)
+    {
+        $sql = $this->connection->prepare(
+            "UPDATE clip c
+            SET c.access_type = :access_type
+            WHERE c.url = :url
+            AND c.created_by = :user_id"
+        );
+
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':access_type', $access_type, PDO::PARAM_STR);
+
+        $sql->execute();
+        return $sql->rowCount();
+    }
+
     public function getClip($url, $user_id)
     {
         $sql = $this->connection->prepare(
