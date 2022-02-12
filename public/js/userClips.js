@@ -33,7 +33,7 @@ function clipFormat(clip, isNotification = false) {
         : clip.content_type.toLowerCase()
 
     const td3 = document.createElement('td')
-    td3.innerText = new Date(clip.time + 'Z')
+    td3.innerText = new Date(clip.time + 'Z').toLocaleString()
 
     tr.appendChild(td1)
     tr.appendChild(td2)
