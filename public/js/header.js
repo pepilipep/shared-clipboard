@@ -25,8 +25,20 @@ window.addEventListener('load', async (e) => {
         headerActionsWrapper.appendChild(profile)
 
         const notEl = document.createElement('a')
-        notEl.href = '/profile.html'
-        notEl.innerText = notificationsCount
+        notEl.href = '/profile.html?tab=notifications'
+        notEl.className = 'notifications-box'
+
+        const notifText = document.createElement('h4')
+        notifText.innerText = notificationsCount
+        if (notificationsCount > 0) {
+            notEl.className += ' has-notifications'
+        }
+
+        const notifIcon = document.createElement('img')
+        notifIcon.src = '/img/notifications.svg'
+
+        notEl.appendChild(notifIcon)
+        notEl.appendChild(notifText)
         headerActionsWrapper.appendChild(notEl)
 
         const lbut = document.createElement('button')

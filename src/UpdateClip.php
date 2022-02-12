@@ -16,7 +16,9 @@ try {
     $clip = $db->getClip($url)[0];
     $users = $db->getUsersFollowingClips($clip['id']);
     foreach ($users as $user) {
-        if (!isset($_SESSION['user_id']) || $user['user_id'] !== $_SESSION['user_id']) {
+        if (!isset($_SESSION['user_id'])) {
+            $db->insertNotification($user['user_id'], NULL, $clip['id']);
+        } else if ($user['user_id'] !== $_SESSION['user_id']) {
             $db->insertNotification($user['user_id'], $_SESSION['user_id'], $clip['id']);
         }
     }

@@ -12,6 +12,11 @@ window.addEventListener('load', async (e) => {
             tabs[i].children[j].addEventListener('click', chooseTab)
         }
     }
+
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('tab')) {
+        document.getElementById(urlParams.get('tab')).click()
+    }
 })
 
 function clipFormat(clip, isNotification = false) {

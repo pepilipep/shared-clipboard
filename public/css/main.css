@@ -150,3 +150,12 @@ textarea {
     height: calc(85%);
     width: 100%;
 }
+
+.notifications-box {
+    display: flex;
+    padding: 0 20px;
+}
+
+.has-notifications {
+    color: rgb(139, 53, 53);
+}
