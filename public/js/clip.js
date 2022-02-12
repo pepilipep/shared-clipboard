@@ -4,7 +4,7 @@ const contentWrapper = document.getElementById('content-wrapper')
 
 let exists = false
 
-window.addEventListener('load', (e) => {
+window.addEventListener('load', async (e) => {
     const logged = isLoggedIn()
     const url = window.location.pathname.replace('/clips/', '')
     const content = document.getElementById('content')
@@ -17,7 +17,7 @@ window.addEventListener('load', (e) => {
         body: data,
     })
         .then((res) => res.json())
-        .then(async (res) => {
+        .then((res) => {
             if (res && res.content) {
                 exists = true
                 typeSelect.value = res.content_type.toLowerCase()
@@ -29,15 +29,22 @@ window.addEventListener('load', (e) => {
                         uploadedFileElement(folder, filename)
                     )
                 }
-
-                if (await logged) {
-                    document
-                        .getElementsByClassName('panel-container')[0]
-                        .appendChild(createSubscribeElement())
-                }
             }
         })
         .catch((e) => console.error('Something went wrong', e))
+
+    if (await logged) {
+        fetch('/isSubscribed.php', {
+            method: 'POST',
+            body: data,
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                document
+                    .getElementsByClassName('panel-container')[0]
+                    .appendChild(createSubscribeElement(res))
+            })
+    }
 })
 
 function uploadedFileElement(folder, filename) {
@@ -128,15 +135,38 @@ function subscribe() {
 
     fetch('/subscribe.php', { method: 'POST', body: data })
         .then((res) => res.json())
+        .then(() => {
+            const button = document.getElementById('subscribe-button')
+            button.replaceWith(createSubscribeElement(true))
+        })
         .catch((e) => console.error('Something went wrong:', e))
 }
 
-function createSubscribeElement() {
+function unsubscribe() {
+    const url = window.location.pathname.replace('/clips/', '')
+    const data = new FormData()
+    data.set('url', url)
+
+    fetch('/unsubscribe.php', { method: 'POST', body: data })
+        .then((res) => res.json())
+        .then(() => {
+            const button = document.getElementById('subscribe-button')
+            button.replaceWith(createSubscribeElement(false))
+        })
+        .catch((e) => console.error('Something went wrong:', e))
+}
+
+function createSubscribeElement(isSubscribed) {
     let button = document.createElement('button')
     button.id = 'subscribe-button'
     button.type = 'button'
-    button.onclick = subscribe
-    button.innerText = 'Subscribe'
+    if (!isSubscribed) {
+        button.onclick = subscribe
+        button.innerText = 'Subscribe'
+    } else {
+        button.onclick = unsubscribe
+        button.innerText = 'Unsubscribe'
+    }
     return button
 }
 

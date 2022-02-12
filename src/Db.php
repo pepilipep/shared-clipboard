@@ -214,4 +214,31 @@ class Db
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
         $sql->execute();
     }
+
+    public function unsubscribe($user_id, $url)
+    {
+        $sql = $this->connection->prepare(
+            "DELETE s
+            FROM subscription s
+            JOIN clip c ON c.id = s.clip_id
+            WHERE c.url = :url AND s.user_id = :user_id"
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
+    public function isSubscribed($user_id, $url)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT *
+            FROM subscription s
+            JOIN clip c ON s.clip_id = c.id
+            WHERE url = :url AND s.user_id = :user_id"
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
 }
