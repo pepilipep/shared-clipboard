@@ -9,13 +9,18 @@ $db = new Db;
 $url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
 
 try {
-    $clips = $db->getClip($url);
+    $clips = $db->getClip($url, $_SESSION['user_id'] ?? NULL);
     if (count($clips) != 1) {
         echo json_encode([]);
         return;
     }
 
     $clip = $clips[0];
+
+    if (!$clip['can_read']) {
+        echo json_encode(['rbac' => 'Permission denied']);
+        return;
+    }
 
     $expiry_time = $clip['expiry_time'];
 

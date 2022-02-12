@@ -77,20 +77,49 @@ class Db
         $sql->execute();
     }
 
-    public function updateClip($url, $content_type, $content)
+    public function updateClip($url, $content_type, $content, $user_id)
     {
-        $sql = $this->connection->prepare("UPDATE clip SET content = :content, content_type = :content_type WHERE url = :url");
+        $sql = $this->connection->prepare(
+            "UPDATE clip c
+            SET c.content = :content, c.content_type = :content_type
+            WHERE c.url = :url
+            AND (
+                c.access_type = 'PUBLIC' OR (
+                    c.access_type = 'PROTECTED' AND
+                    c.url IN (
+                        SELECT c1.url
+                        FROM clip c1
+                        JOIN permission p ON c1.id = p.clip_id
+                        WHERE c1.url = :url
+                        AND p.user_id = :user_id
+                        AND p.user_action = 'WRITE' 
+                    )
+                )
+            )"
+        );
 
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $sql->bindParam(':content', $content, PDO::PARAM_STR);
         $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
 
         $sql->execute();
+        return $sql->rowCount();
     }
 
-    public function getClip($url)
+    public function getClip($url, $user_id)
     {
-        $sql = $this->connection->prepare("SELECT * FROM clip WHERE url = :url");
+        $sql = $this->connection->prepare(
+            "SELECT *,
+                (
+                    access_type IN ('PUBLIC', 'PROTECTED')
+                    OR created_by = :user_id
+                ) AS can_read
+            FROM clip
+            WHERE url = :url
+            "
+        );
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
         $sql->execute();
         return $sql->fetchAll();

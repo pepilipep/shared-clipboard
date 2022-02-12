@@ -18,7 +18,9 @@ window.addEventListener('load', async (e) => {
     })
         .then((res) => res.json())
         .then((res) => {
-            if (res && res.content) {
+            if (res && res.rbac) {
+                alert(res.rbac)
+            } else if (res && res.content) {
                 exists = true
                 typeSelect.value = res.content_type.toLowerCase()
                 if (typeSelect.value === 'text') {
@@ -190,6 +192,12 @@ form.addEventListener('submit', (event) => {
         body: data,
     })
         .then((res) => res.json())
-        .then(() => window.location.replace(`/created.html?url=${url}`))
+        .then((res) => {
+            if (res && res.rbac) {
+                alert(res.rbac)
+            } else {
+                window.location.replace(`/created.html?url=${url}`)
+            }
+        })
         .catch((e) => console.error('Something went wrong:', e))
 })
