@@ -124,6 +124,41 @@ class Db
         return $sql->rowCount();
     }
 
+    public function addEditor($url, $user_id, $editor)
+    {
+        $sql = $this->connection->prepare(
+            "INSERT INTO permission(user_id, clip_id, user_action)
+            SELECT u.id, c.id, 'WRITE'
+            FROM clip c
+            JOIN user u
+            WHERE c.url = :url
+            AND c.created_by = :user_id
+            AND (u.email = :editor OR u.username = :editor)"
+        );
+
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $sql->bindParam(':editor', $editor, PDO::PARAM_STR);
+
+        $sql->execute();
+        return $sql->rowCount();
+    }
+
+    public function getEditors($url)
+    {
+        $sql = $this->connection->prepare(
+            "SELECT u.username, u.email
+            FROM permission p
+            JOIN clip c ON p.clip_id = c.id
+            JOIN user u ON p.user_id = u.id
+            WHERE c.url = :url"
+        );
+
+        $sql->bindParam(':url', $url, PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
     public function getClip($url, $user_id)
     {
         $sql = $this->connection->prepare(

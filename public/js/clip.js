@@ -20,7 +20,7 @@ window.addEventListener('load', async (e) => {
         .then((res) => {
             if (res && res.rbac) {
                 alert(res.rbac)
-            } else if (res && res.content) {
+            } else if (res && res.content_type) {
                 exists = true
                 typeSelect.value = res.content_type.toLowerCase()
                 if (typeSelect.value === 'text') {
@@ -56,7 +56,7 @@ window.addEventListener('load', async (e) => {
     }
 })
 
-function changeVisibility(event) {
+async function changeVisibility(event) {
     const url = window.location.pathname.replace('/clips/', '')
     const data = new FormData()
     data.set('url', url)
@@ -75,6 +75,74 @@ function changeVisibility(event) {
             }
         })
         .catch((e) => console.error('Something went wrong', e))
+
+    if (event.target.value === 'PROTECTED') {
+        document
+            .getElementsByClassName('panel-container')[0]
+            .appendChild(await editorsForm())
+    }
+}
+
+function addEditor(event) {
+    event.preventDefault()
+
+    const url = window.location.pathname.replace('/clips/', '')
+    const data = new FormData()
+    data.set('url', url)
+
+    const editor = document.getElementById('editor-name').value
+    data.set('editor', editor)
+
+    fetch('/addEditor.php', { method: 'POST', body: data })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res && res.rbac) {
+                alert(res.rbac)
+            } else {
+                document.getElementById('editor-form').remove()
+            }
+        })
+        .catch((e) => console.error('Something went wrong:', e))
+}
+
+async function editorsForm() {
+    const url = window.location.pathname.replace('/clips/', '')
+    const data = new FormData()
+    data.set('url', url)
+    const editors = await fetch('/editors.php', { method: 'POST', body: data })
+        .then((res) => res.json())
+        .catch((e) => console.error('Something went wrong:', e))
+
+    const form = document.createElement('form')
+    form.id = 'editor-form'
+
+    const editor = document.createElement('input')
+    editor.type = 'text'
+    editor.id = 'editor-name'
+    editor.placeholder = 'Editor'
+
+    const submitButton = document.createElement('button')
+    submitButton.type = 'submit'
+    submitButton.form = 'editor-form'
+    submitButton.innerText = 'Add editor'
+
+    const closeButton = document.createElement('button')
+    closeButton.type = 'button'
+    closeButton.innerText = 'Close'
+    closeButton.onclick = () => form.remove()
+
+    editors.forEach((editor) => {
+        const edEl = document.createElement('p')
+        edEl.innerText = `${editor.username} (${editor.email})`
+        form.appendChild(edEl)
+    })
+
+    form.appendChild(editor)
+    form.appendChild(submitButton)
+    form.appendChild(closeButton)
+    form.onsubmit = addEditor
+
+    return form
 }
 
 function createVisibilityElemenent(current) {
