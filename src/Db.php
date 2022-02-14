@@ -85,7 +85,8 @@ class Db
             SET c.content = :content, c.content_type = :content_type
             WHERE c.url = :url
             AND (
-                c.access_type = 'PUBLIC' OR (
+                c.access_type = 'PUBLIC' OR
+                c.created_by = :user_id OR (
                     c.access_type = 'PROTECTED' AND
                     c.url IN (
                         SELECT c1.url

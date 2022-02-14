@@ -67,20 +67,18 @@ async function changeVisibility(event) {
         body: data,
     })
         .then((res) => res.json())
-        .then((res) => {
+        .then(async (res) => {
             if (res && res.rbac) {
                 alert(res.rbac)
             } else if (res && res.error) {
                 alert(res.error)
+            } else if (event.target.value === 'PROTECTED') {
+                document
+                    .getElementsByClassName('panel-container')[0]
+                    .appendChild(await editorsForm())
             }
         })
         .catch((e) => console.error('Something went wrong', e))
-
-    if (event.target.value === 'PROTECTED') {
-        document
-            .getElementsByClassName('panel-container')[0]
-            .appendChild(await editorsForm())
-    }
 }
 
 function addEditor(event) {
