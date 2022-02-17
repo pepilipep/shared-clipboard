@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS clip(
     url TEXT UNIQUE NOT NULL,
     content_type ENUM('TEXT', 'FILE') NOT NULL,
 	content TEXT NOT NULL,
+	action_url TEXT NULL DEFAULT NULL,
     status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
     access_type ENUM('PRIVATE', 'PUBLIC', 'PROTECTED') NOT NULL,
     created_by MEDIUMINT NULL DEFAULT NULL,

@@ -44,6 +44,7 @@ try {
         'content' => $clip['content'],
         'content_type' => $clip['content_type'],
         'access_type' => $clip['access_type'],
+        'action_url' => $clip['action_url'],
     ]);
 } catch (Exception $e) {
     error_log($e);

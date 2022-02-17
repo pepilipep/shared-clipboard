@@ -12,6 +12,11 @@ $expiry_time = filter_input(INPUT_POST, 'expiry-time', FILTER_SANITIZE_NUMBER_IN
 $content_type = mb_strtoupper(htmlspecialchars($_POST['content-type']));
 $content = htmlspecialchars($_POST['content']);
 
+$action_url = NULL;
+if (isset($_POST['action-url']) && mb_strlen($_POST['action-url'])) {
+    $action_url = htmlspecialchars($_POST['action-url']);
+}
+
 $future = new DateTime('now');
 if ($expiry_time == 0) {
     $expiry_time = null;
@@ -27,7 +32,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 try {
-    $db->createClip($url, $content_type, $content, $created_by, $expiry_time);
+    $db->createClip($url, $content_type, $content, $created_by, $expiry_time, $action_url);
     echo json_encode([
         'msg' => 'Clip created successfully!'
     ]);

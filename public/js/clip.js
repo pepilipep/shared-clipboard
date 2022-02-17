@@ -20,6 +20,7 @@ window.addEventListener('load', async (e) => {
         .then((res) => {
             if (res && res.rbac) {
                 alert(res.rbac)
+                window.location.replace('/')
             } else if (res && res.content_type) {
                 exists = true
                 typeSelect.value = res.content_type.toLowerCase()
@@ -32,6 +33,8 @@ window.addEventListener('load', async (e) => {
                     )
                 }
 
+                document.getElementById('action-url').value = res.action_url
+
                 if (logged) {
                     document
                         .getElementsByClassName('panel-container')[0]
@@ -41,7 +44,7 @@ window.addEventListener('load', async (e) => {
         })
         .catch((e) => console.error('Something went wrong', e))
 
-    if (logged) {
+    if (logged && exists) {
         fetch('/isSubscribed.php', {
             method: 'POST',
             body: data,
@@ -304,6 +307,7 @@ form.addEventListener('submit', (event) => {
     data.set('content-type', contentType)
     data.set('content', contentElement.value)
     data.set('expiry-time', expiryTime)
+    data.set('action-url', document.getElementById('action-url').value)
 
     fetch(exists ? '/updateClip.php' : '/clip.php', {
         method: 'POST',

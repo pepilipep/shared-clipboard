@@ -62,11 +62,11 @@ class Db
         return $this->connection;
     }
 
-    public function createClip($url, $content_type, $content, $created_by, $expiry_time)
+    public function createClip($url, $content_type, $content, $created_by, $expiry_time, $action_url)
     {
         $sql = $this->connection->prepare("
-        INSERT INTO clip(url, content, content_type, status, access_type, created_by, expiry_time)
-        VALUES (:url, :content, :content_type, 'ACTIVE', 'PUBLIC', :created_by, :expiry_time)
+        INSERT INTO clip(url, content, content_type, status, access_type, created_by, expiry_time, action_url)
+        VALUES (:url, :content, :content_type, 'ACTIVE', 'PUBLIC', :created_by, :expiry_time, :action_url)
         ");
 
         $sql->bindParam(':url', $url, PDO::PARAM_STR);
@@ -74,15 +74,16 @@ class Db
         $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
         $sql->bindParam(':created_by', $created_by, PDO::PARAM_STR);
         $sql->bindParam(':expiry_time', $expiry_time, PDO::PARAM_STR);
+        $sql->bindParam(':action_url', $action_url, PDO::PARAM_STR);
 
         $sql->execute();
     }
 
-    public function updateClip($url, $content_type, $content, $user_id)
+    public function updateClip($url, $content_type, $content, $user_id, $action_url)
     {
         $sql = $this->connection->prepare(
             "UPDATE clip c
-            SET c.content = :content, c.content_type = :content_type
+            SET c.content = :content, c.content_type = :content_type, c.action_url = :action_url
             WHERE c.url = :url
             AND (
                 c.access_type = 'PUBLIC' OR
@@ -104,6 +105,7 @@ class Db
         $sql->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $sql->bindParam(':content', $content, PDO::PARAM_STR);
         $sql->bindParam(':content_type', $content_type, PDO::PARAM_STR);
+        $sql->bindParam(':action_url', $action_url, PDO::PARAM_STR);
 
         $sql->execute();
         return $sql->rowCount();
